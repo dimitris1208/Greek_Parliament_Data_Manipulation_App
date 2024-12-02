@@ -13,7 +13,7 @@ db_port = os.getenv('db_port')
 db_name = os.getenv('db_name')
 
 # Create the database engine
-engine = create_engine(f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}', echo=True)
+engine = create_engine(f'postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}', echo=True)
 
 create_table_query = """
 CREATE TABLE public.final_speeches AS

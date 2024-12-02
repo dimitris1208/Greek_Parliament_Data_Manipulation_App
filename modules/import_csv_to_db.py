@@ -1,8 +1,9 @@
-import pandas as pd
-from sqlalchemy import create_engine
-import psycopg
 import os
-from python-dotenv import load_dotenv
+from pathlib import Path
+from sqlalchemy import create_engine
+import pandas as pd
+import psycopg
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -14,14 +15,15 @@ db_port = os.getenv('db_port')
 db_name = os.getenv('db_name')
 table_name = 'speeches'  # Table name in your PostgreSQL database
 
-# Path to the CSV file
-csv_file_path = "../data/Greek_Parliament_Proceedings_1989_2020.csv"
+# Resolve the absolute path to the CSV file
+project_root = Path(__file__).resolve().parent.parent  # Adjust this based on your folder structure
+csv_file_path = project_root / "data" / "Greek_Parliament_Proceedings_1989_2020.csv"
 
 # Batch size for processing chunks
 chunk_size = 10000
 
 # Create the database engine
-engine = create_engine(f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
+engine = create_engine(f'postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}', echo=True)
 
 
 def preprocess_chunk(chunk):
