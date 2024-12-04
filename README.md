@@ -33,12 +33,13 @@ Create a `.env` file in the root directory with the following format:
 
 ---
 
-Greek Stemmer Library Modification
+
+
+### Greek Stemmer Library Modification
 
 For the GreekStemmer library to work properly with the correct encoding, modify the __init__.py file of the library as follows:
 
-import os
-import yaml
+```python
 
 class GreekStemmer:
     def load_settings(self):
@@ -47,6 +48,8 @@ class GreekStemmer:
                   os.path.dirname(__file__), 'stemmer.yml'), 'r', encoding='utf-8') as f:
             custom_rules = yaml.load(f.read(), Loader=yaml.FullLoader)
         return custom_rules
+        
+```
 
 This ensures that the stemmer.yml file is loaded with the correct encoding.
 
