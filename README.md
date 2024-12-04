@@ -7,7 +7,7 @@ This project processes and analyzes speeches from the Greek Parliament, focusing
 ## Prerequisites
 
 ### Software Requirements
-- **Python**: Version 3.10 or higher ([Download Python](https://www.python.org/downloads/))
+- **Python**: Version 3.10 - 3.12 ([Download Python](https://www.python.org/downloads/))
 - **PostgreSQL**: Version 14 or higher, including pgAdmin ([Download PostgreSQL](https://www.postgresql.org/download/))
 - **Microsoft C++ Build Tools**: Required for some Python dependencies ([Download Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/))
 
@@ -28,6 +28,27 @@ Create a `.env` file in the root directory with the following format:
 
 
 ## Directory Structure
+
+
+
+---
+
+Greek Stemmer Library Modification
+
+For the GreekStemmer library to work properly with the correct encoding, modify the __init__.py file of the library as follows:
+
+import os
+import yaml
+
+class GreekStemmer:
+    def load_settings(self):
+        custom_rules = ""
+        with open(os.path.join(
+                  os.path.dirname(__file__), 'stemmer.yml'), 'r', encoding='utf-8') as f:
+            custom_rules = yaml.load(f.read(), Loader=yaml.FullLoader)
+        return custom_rules
+
+This ensures that the stemmer.yml file is loaded with the correct encoding.
 
 
 
