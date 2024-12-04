@@ -1,4 +1,9 @@
-pandas~=2.2.3
-psycopg~=3.2.3
+spacy~=3.8.2
 SQLAlchemy~=2.0.36
-python-dotenv
+python-dotenv~=1.0.1
+greek_stemmer~=0.1.1
+Flask~=3.1.0
+psycopg~=3.2.3
+pandas~=2.2.3
+tqdm~=4.67.1
+scikit-learn~=1.5.2

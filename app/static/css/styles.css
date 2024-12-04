@@ -1,0 +1,136 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9; /* Soft light background */
+    color: #333; /* Dark text for contrast */
+    padding-top: 0; /* Remove space above the navbar */
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #007bff; /* Soft blue background */
+    padding: 15px 30px; /* Adjust padding for a better layout */
+    text-align: center;
+    position: fixed; /* Fix navbar to top */
+    width: 100%; /* Make navbar span full width */
+    top: 0;
+    left: 0;
+}
+
+
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.navbar-nav li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.navbar-nav li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+.navbar-nav li a:hover {
+    color: #ffcc00; /* Soft yellow on hover */
+}
+
+/* Main Content */
+.container {
+    padding: 30px;
+    max-width: 900px;
+    margin: 80px auto 0 auto; /* Center content and add margin for navbar */
+}
+
+/* Form Styling */
+form {
+    background-color: #ffffff; /* Light background */
+    padding: 30px;
+    border-radius: 15px; /* Rounded corners for form */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    text-align: center;
+}
+
+form input {
+    padding: 12px;
+    width: 70%;
+    margin-bottom: 10px;
+    border: 2px solid #007bff; /* Soft blue border */
+    border-radius: 4px;
+    font-size: 1.1rem;
+}
+
+form button {
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #ffcc00;
+    color: #007bff;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff; /* Blue header */
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; /* Soft hover effect */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .navbar-nav li {
+        margin: 0 10px;
+    }
+
+    form input {
+        width: 90%;
+    }
+
+    form button {
+        width: 90%;
+    }
+}

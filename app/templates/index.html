@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 style="text-align:center">Αναζήτηση🔎</h1>
+
+<!-- Search Form -->
+<form method="POST" action="/">
+    <input type="text" name="search_term" placeholder="Enter your search term" value="{{ search_term if search_term else '' }}" required>
+    <button type="submit">Search</button>
+</form>
+{% if search_term %}
+    {% if results %}
+        <h2>Αποτελέσματα για "{{ search_term }}"</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Όνομα Μέλους</th>
+                    <th>Ημερομηνία</th>
+                    <th>Πολιτικό Κόμμα</th>
+                    <th>Ρόλος</th>
+                    <th>Ομιλία</th>
+                    <th>Βαθμός Σχετικότητας</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result['speech']['member_name'] }}</td>
+                    <td>{{ result['speech']['sitting_date'] }}</td>
+                    <td>{{ result['speech']['political_party'] }}</td>
+                    <td>{{ result['speech']['roles'] }}</td>
+                    <td>
+                        <!-- Click to view the full speech -->
+                        <a href="#" onclick="alert('{{ result['speech']['merged_speech'] }}')">View Full Speech</a>
+                    </td>
+                    <td>{{ result['tfidf_value'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No results found for your search.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

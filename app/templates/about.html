@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin-top: 100px; padding: 20px;">
+    <h1 style="color: #003366; font-size: 2.5rem; font-weight: 600; margin-bottom: 20px; text-align:center">
+        Σχετικά με την Εφαρμογή
+    </h1>
+
+    <p style="font-size: 1.2rem; line-height: 1.6; color: #333; text-align: justify; padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        Αυτή η εφαρμογή αναζητά ομιλίες από τη Βουλή των Ελλήνων από το 1989 έως το 2020 και επιστρέφει τις σχετικές ομιλίες.
+        Χρησιμοποιεί τη μέθοδο <strong>TF-IDF</strong> (Term Frequency-Inverse Document Frequency),
+        την τεχνική στίλβωσης λέξεων <strong>(stemming)</strong> και γενικό προεπεξεργασμένο κείμενο για να επιτευχθεί καλύτερη ακρίβεια και ταχύτητα στην αναζήτηση.
+        Η εφαρμογή αυτή σας επιτρέπει να αναζητήσετε συγκεκριμένες λέξεις ή φράσεις μέσα στις ομιλίες, 
+        και να βρείτε τις ομιλίες που περιέχουν τα αποτελέσματα που ψάχνετε.
+    </p>
+</div>
+{% endblock %}
