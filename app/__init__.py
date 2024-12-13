@@ -5,8 +5,10 @@ import psycopg
 import os
 
 from app.keyword_route import keywords_blueprint
+from app.lsi_route import lsi_blueprint
 from app.main_route import main_blueprint
-from app.member_similarity import member_similarity_blueprint
+from app.member_similarity_route import member_similarity_blueprint
+from app.lsi_route import lsi_blueprint
 
 db = SQLAlchemy()
 
@@ -34,5 +36,6 @@ def create_app():
     app.register_blueprint(main_blueprint)
     app.register_blueprint(keywords_blueprint)
     app.register_blueprint(member_similarity_blueprint)
+    app.register_blueprint(lsi_blueprint)
 
     return app

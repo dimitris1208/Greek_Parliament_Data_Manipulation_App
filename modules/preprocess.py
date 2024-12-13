@@ -68,8 +68,8 @@ def preprocess_documents_chunk(texts, nlp, greek_stopwords, UNWANTED_PATTERN, TA
             cleaned_token = UNWANTED_PATTERN.sub('', token.text)
             cleaned_token = TAB_PATTERN.sub('', cleaned_token)
 
-            # Lowercase the word and remove accents before passing to stemmer
-            cleaned_token = cleaned_token.upper()  # Lowercase
+            # Uppercase the word and remove accents before passing to stemmer
+            cleaned_token = cleaned_token.upper()  # Uppercase
             cleaned_token = remove_accents(cleaned_token)  # Remove accents
 
             # Skip if token is empty, a stopword, or a single character

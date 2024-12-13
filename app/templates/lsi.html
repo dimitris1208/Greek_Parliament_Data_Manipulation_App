@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 style="text-align:center; margin-top: 20px;">LSI Διανύσματα για κάθε ομιλία (10 θεματικές περιοχές)</h1>
+
+<div class="table-container" style="margin: 20px auto; width: 90%;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Speech ID</th>
+                <th>LSI Vector</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vector in vectors %}
+            <tr>
+                <td>{{ vector.speech_id }}</td>
+                <td>{{ vector.lsi_vector | join(", ") }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="pagination" style="text-align: center; margin-top: 20px;">
+    <p>Page {{ current_page }} of {{ total_pages }}</p>
+    {% if current_page > 1 %}
+    <a href="/lsi_vectors?page={{ current_page - 1 }}" class="btn btn-primary">Previous</a>
+    {% endif %}
+    {% if current_page < total_pages %}
+    <a href="/lsi_vectors?page={{ current_page + 1 }}" class="btn btn-primary">Next</a>
+    {% endif %}
+</div>
+
+<style>
+    .pagination {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .btn:disabled, .btn.disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
+
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .table tr:hover {
+        background-color: #ddd;
+    }
+
+    h1 {
+        font-size: 24px;
+        color: #333;
+    }
+
+    .pagination p {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+    }
+</style>
+{% endblock %}
