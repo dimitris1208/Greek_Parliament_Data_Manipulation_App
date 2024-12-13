@@ -49,17 +49,19 @@ def create_tfidf_table():
 
 def insert_tfidf_values_to_db(speeches, vectorizer, speech_ids, session):
     """Insert TF-IDF values for the corpus into the database, ensuring correct speech_id mapping."""
-    tfidf_matrix = vectorizer.fit_transform(speeches)
+    # Create the sparse matrix using TfidfVectorizer (using sparse format)
+    tfidf_matrix = vectorizer.fit_transform(speeches)  # This is a sparse matrix
     terms = vectorizer.get_feature_names_out()
 
+    # Collect TF-IDF values in a list for batch insertion
     tfidf_values = []
-    for doc_idx, doc in enumerate(tfidf_matrix.toarray()):
-        for term_idx, value in enumerate(doc):
+    for doc_idx, doc in enumerate(tfidf_matrix):
+        for term_idx, value in enumerate(doc.toarray()[0]):  # Convert sparse to dense for iteration
             if value > 0:  # Only insert non-zero values
                 tfidf_values.append((speech_ids[doc_idx], terms[term_idx], value))
 
     try:
-        for i in range(0, len(tfidf_values), 100):  # Batch insert
+        for i in range(0, len(tfidf_values), 100):  # Batch insert to avoid memory overload
             batch = tfidf_values[i:i + 100]
             session.execute(
                 text("""
@@ -87,10 +89,10 @@ def process_corpus_and_insert():
         speeches = [row[1] for row in result]
         speech_ids = [row[0] for row in result]
 
-        # Initialize TfidfVectorizer
+        # Initialize TfidfVectorizer (using stopwords)
         vectorizer = TfidfVectorizer(stop_words="english")  # You can customize the stopwords
 
-        # Create TF-IDF table
+        # Create the tfidf_values table if it doesn't exist
         create_tfidf_table()
 
         # Insert the TF-IDF values into the database

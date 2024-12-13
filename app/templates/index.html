@@ -5,9 +5,10 @@
 
 <!-- Search Form -->
 <form method="POST" action="/">
-    <input type="text" name="search_term" placeholder="Enter your search term" value="{{ search_term if search_term else '' }}" required>
+    <input type="text" name="search_term" placeholder="Αναζήτησε κάτι..." value="{{ search_term if search_term else '' }}" required>
     <button type="submit">Search</button>
 </form>
+
 {% if search_term %}
     {% if results %}
         <h2>Αποτελέσματα για "{{ search_term }}"</h2>
@@ -30,8 +31,11 @@
                     <td>{{ result['speech']['political_party'] }}</td>
                     <td>{{ result['speech']['roles'] }}</td>
                     <td>
-                        <!-- Click to view the full speech -->
-                        <a href="#" onclick="alert('{{ result['speech']['merged_speech'] }}')">View Full Speech</a>
+                        <!-- Button to trigger custom modal -->
+                        <button type="button" class="view-speech-btn" data-speech="{{ result['speech']['merged_speech'] }}"
+                                data-member="{{ result['speech']['member_name'] }}">
+                            View Full Speech
+                        </button>
                     </td>
                     <td>{{ result['tfidf_value'] }}</td>
                 </tr>
@@ -39,7 +43,55 @@
             </tbody>
         </table>
     {% else %}
-        <p>No results found for your search.</p>
+    <p>Δεν βρέθηκαν αποτελέσματα για την αναζήτηση.</p>
     {% endif %}
 {% endif %}
+
+<!-- Custom modal container -->
+<div id="speechModal" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 100%; max-width: 1000px; background-color: white; padding: 20px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 9999; border-radius: 10px; overflow-y: auto;">
+    <button id="closeModal" style="position: absolute; top: 10px; right: 10px; background-color: #f44336;
+            color: white; border: none; font-size: 16px; width: 30px; height: 30px; cursor: pointer;
+            border-radius: 50%; padding: 0;">×</button>
+    <h3 id="speechMemberName" style="margin-bottom: 10px;"></h3>
+    <div id="speechContent" style="font-size: 18px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;
+        max-height: 500px ; overflow-y: auto;"></div>
+</div>
+
+<script>
+// JavaScript for handling modal
+document.addEventListener('DOMContentLoaded', function () {
+    const viewButtons = document.querySelectorAll('.view-speech-btn');
+    const modal = document.getElementById('speechModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const speechContent = document.getElementById('speechContent');
+    const speechMemberName = document.getElementById('speechMemberName');
+
+    // Function to show modal
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const speech = button.getAttribute('data-speech');
+            const memberName = button.getAttribute('data-member');
+
+            speechMemberName.innerText = 'Ομιλία : ' + memberName;
+            speechContent.innerHTML = speech;  // Display speech content directly
+            modal.style.display = 'block';  // Show the modal
+        });
+    });
+
+    // Function to close modal
+    closeModalBtn.addEventListener('click', function () {
+        modal.style.display = 'none';  // Hide the modal
+    });
+
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+</script>
+
 {% endblock %}

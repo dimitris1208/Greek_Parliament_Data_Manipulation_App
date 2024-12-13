@@ -3,8 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import psycopg
 import os
-from app.routes import main_blueprint
 
+from app.keyword_route import keywords_blueprint
+from app.main_route import main_blueprint
+from app.member_similarity import member_similarity_blueprint
 
 db = SQLAlchemy()
 
@@ -30,5 +32,7 @@ def create_app():
     # Register blueprints
 
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(keywords_blueprint)
+    app.register_blueprint(member_similarity_blueprint)
 
     return app

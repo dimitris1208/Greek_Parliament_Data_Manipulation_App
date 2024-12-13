@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 style="text-align:center">Ομοιότητα Μελών</h1>
+
+<!-- Form for selecting a Member and k -->
+<form method="POST" action="/member_similarity">
+    <div>
+        <label for="member">Επίλεξε μέλος:</label>
+        <input type="text" id="member" name="member" list="member_list" value="{{ selected_member if selected_member else '' }}" placeholder="Όνομα μέλους" required>
+        <datalist id="member_list">
+            {% for member in members %}
+                <option value="{{ member }}">{{ member }}</option>
+            {% endfor %}
+        </datalist>
+    </div>
+    <div>
+        <label for="k">Επίλεξε top k :</label>
+        <input type="number" id="k" name="k" min="2" max="10" value="{{ k if k else 5 }}" required>
+    </div>
+    <button type="submit">Δείξε τα μέλη</button>
+</form>
+
+{% if results %}
+<br>
+    <h2>Top {{ k }} όμοια μέλη με "{{ selected_member }}"</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Similarity Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result['member'] }}</td>
+                    <td>{{ result['similarity_score'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% elif member %}
+    <p>Δε βρέθηκαν αποτελέσματα</p>
+{% endif %}
+
+{% endblock %}

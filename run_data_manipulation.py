@@ -5,12 +5,14 @@ from modules.clear_null_values import delete_null_member_name_rows
 from modules.preprocess import  create_processed_speeches_table,preprocess_and_store_speeches
 from modules.create_tf_idf import process_corpus_and_insert
 from modules.create_indexes import create_indexes
+from modules.create_member_similarity import process_member_similarity
 
 def run_data_pipeline():
     """
     Run the data manipulation pipeline sequentially.
     """
     try:
+
         print("Starting the data manipulation pipeline...")
         # Step 1: Import CSV to Database
         print("\nStep 1: Importing CSV into the database...")
@@ -26,17 +28,21 @@ def run_data_pipeline():
         print("Step 3: Cleaning `final_speeches` table by removing rows with NULL `member_name`...")
         delete_null_member_name_rows()
         print("Step 3 completed\n")
-
+        
         print("Step 4: Preprocessing , TF-IDF calculation  process...")
         create_processed_speeches_table()
         preprocess_and_store_speeches()
-
+        
         process_corpus_and_insert()
         print("Step 4 completed\n ")
-
         print("Step 5: Create Indexes using GIN postgres' indexing")
         create_indexes()
         print("Step 5: Completed \n")
+
+        print("Step 6 : Creating member_similarity table")
+        process_member_similarity()
+        print("Step 6: Completed")
+
 
         print("Data manipulation pipeline completed successfully.")
 
