@@ -135,3 +135,46 @@ tbody tr:hover {
         width: 90%;
     }
 }
+
+
+/* Styling for "Παρόμοιες Ομιλίες" button */
+.similar-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    background-color: #17a2b8; /* Light blue */
+    border: 2px solid #17a2b8;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.similar-btn:hover {
+    background-color: #138496; /* Darker blue */
+    border-color: #138496;
+    transform: translateY(-2px);
+}
+
+
+/* Styling for "Επιστροφή στην Ομάδα" button */
+.back-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff; /* Blue */
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #0056b3; /* Darker blue */
+    border-color: #0056b3;
+    transform: translateY(-2px);
+}
+

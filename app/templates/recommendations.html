@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 style="text-align: center;">Προτάσεις Παρόμοιων Ομιλιών</h1>
+
+<!-- Loading Spinner -->
+<div id="loading" style="text-align: center; margin-top: 50px;">
+    <div class="spinner"></div>
+    <p style="font-size: 1.2em;">Παρακαλώ περιμένετε...</p>
+</div>
+
+<!-- Results Table -->
+<div id="results" style="display: none;">
+    <p style="text-align: center;">Παρόμοιες ομιλίες με την ομιλία ID {{ speech_id }} στην Ομάδα {{ cluster_id+1 }}:</p>
+    <table style="width: 80%; margin: auto; border-collapse: collapse; text-align: left;">
+        <thead>
+            <tr>
+                <th>ID Ομιλίας</th>
+                <th>Ομοιότητα</th>
+            </tr>
+        </thead>
+        <tbody id="recommendations-body">
+            <!-- Dynamically filled by JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a href="{{ url_for('clusters.clusters', cluster_id=cluster_id) }}" class="btn back-btn">
+        Επιστροφή στην Ομάδα
+    </a>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const resultsDiv = document.getElementById("results");
+    const loadingDiv = document.getElementById("loading");
+    const tableBody = document.getElementById("recommendations-body");
+
+    // Fetch recommendations via AJAX
+    fetch("{{ url_for('clusters.recommend_similar_speeches_json', speech_id=speech_id, cluster_id=cluster_id) }}")
+        .then(response => response.json())
+        .then(data => {
+            if (data.recommendations) {
+                data.recommendations.forEach(row => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${row.id}</td>
+                        <td>${row.similarity.toFixed(4)}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="2">Δεν βρέθηκαν παρόμοιες ομιλίες.</td></tr>`;
+            }
+
+            // Hide loading and show results
+            loadingDiv.style.display = "none";
+            resultsDiv.style.display = "block";
+        })
+        .catch(error => {
+            console.error("Error fetching recommendations:", error);
+            tableBody.innerHTML = `<tr><td colspan="2">Σφάλμα κατά τη φόρτωση δεδομένων.</td></tr>`;
+            loadingDiv.style.display = "none";
+            resultsDiv.style.display = "block";
+        });
+});
+</script>
+
+<!-- Loading Spinner CSS -->
+<style>
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+{% endblock %}
