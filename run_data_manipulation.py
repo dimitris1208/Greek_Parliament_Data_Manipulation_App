@@ -1,4 +1,5 @@
 # Import the necessary functions from the modules
+from modules.cluster_speeches import perform_clustering
 from modules.import_csv_to_db import import_csv_to_postgresql
 from modules.create_final_speeches import create_final_speeches_table
 from modules.clear_null_values import delete_null_member_name_rows
@@ -46,6 +47,9 @@ def run_data_pipeline():
         print("Step 7 : Creating lsi vectors  table")
         apply_lsi_parallel()
         print("Step 7: Completed \n")
+
+        print("Step 8 : Creating clusters  table")
+        perform_clustering()
 
         print("Data manipulation pipeline completed successfully.")
 
